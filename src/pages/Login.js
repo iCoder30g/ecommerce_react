@@ -2,46 +2,18 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "../styles/login.css"
-import axios from "axios";
 
-
-const BASE_URL = "http://http://13.235.87.215:4000/";
 
 
 function Login() {
     const [showSignup, setShowSignup] = useState(false);
-    const [message, setMessage] = useState("");
-
+    console.log(showSignup);
 
     const toggleSignup = () => {
         setShowSignup(!showSignup);
     }
 
 
-
-    function loginFn() {
-        const username = document.getElementById("username");
-        const password = document.getElementById("password");
-        setMessage("");
-        const data = {
-            username: username.value,
-            password: password.value
-        }
-        axios.post(BASE_URL + "/api/v1/user/login", data)
-            .then(
-                function (response) {
-                    if (response.status == 200) {
-                        localStorage.setItem("username", response.data.username);
-                        localStorage.setItem("userId", response.data.id);
-                        localStorage.setItem("token", response.data.accessToken);
-                    } else {
-                        setMessage("invalid username or password")
-                    }
-                }
-            ).catch(function (error) {
-                setMessage(error.response.data.message);
-            })
-    }
 
 
 
@@ -76,10 +48,11 @@ function Login() {
                                             <input type="password" id="password" placeholder="password" className="form-control" />
                                         </div>
                                         <div className="input-group">
-                                            <input type="submit" value="LogIn as User" className="btn btn-primary form-control" onClick={loginFn} />
+                                        <Link to="/Home" className="btn btn-primary form-control"> Log in as user</Link>
+                                            
                                         </div>
                                         <div className="text-center text-info" onClick={toggleSignup}>Dont have an Account ? SihnUp</div>
-                                        <div className="text-danger text-center">{message}</div>
+                                        
                                     </div>
                                 ) : (
                                     <div className="login-wrapper">
@@ -88,17 +61,19 @@ function Login() {
                                             <input type="text" id="username" placeholder="username" className="form-control" />
                                         </div>
                                         <div className="input-group">
-                                            <input type="email" id="email" placeholder="email" className="form-control my-1" />
-                                        </div>
-                                        <div className="input-group">
                                             <input type="password" id="password" placeholder="password" className="form-control" />
                                         </div>
+
+                            
+                                            <input type="email" id="email" placeholder="email" className="form-control my-1" />
+                                        
+                                        
 
                                         <div className="input-group ">
                                             <input type="submit" value="SignUp as User" className="btn btn-primary form-control" />
                                         </div>
                                         <div className="text-center text-info" onClick={toggleSignup}>Already have an Account ? Login</div>
-                                        <div className="text-danger text-center">{message}</div>
+                                        
                                     </div>
                                 )
                             }
